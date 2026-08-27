@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="emsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#047857"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <filter id="shadowEms" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#emsGrad)" filter="url(#shadowEms)"/>
+  <!-- Ballot Box & Ballot -->
+  <g fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Ballot Sheet inserting -->
+    <rect x="46" y="22" width="36" height="34" rx="4" fill="#ffffff" fill-opacity="0.95" stroke="#ffffff" stroke-width="3"/>
+    <!-- Checkmark on ballot -->
+    <path d="M54 36 L60 42 L74 28" stroke="#047857" stroke-width="4"/>
+    <!-- Box Body -->
+    <rect x="28" y="52" width="72" height="52" rx="8" fill="#ffffff" fill-opacity="0.15"/>
+    <!-- Box Slot -->
+    <path d="M42 52 L86 52" stroke="#ffffff" stroke-width="6"/>
+    <!-- Emblem / lock icon on box -->
+    <circle cx="64" cy="78" r="8" fill="#ffffff" fill-opacity="0.3"/>
+    <path d="M64 74 L64 82" stroke="#ffffff" stroke-width="3"/>
+  </g>
+</svg>

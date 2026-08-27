@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="acccGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#acccGrad)" filter="url(#shadow)"/>
+  <!-- CCTV Camera Body -->
+  <g fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 50 L84 34 C88 33 92 35 94 39 L98 48 C100 52 98 57 94 59 L42 75 C38 76 34 74 32 70 Z" fill="#ffffff" fill-opacity="0.15"/>
+    <!-- Camera Lens Front -->
+    <ellipse cx="96" cy="48" rx="4" ry="10" transform="rotate(20 96 48)" fill="#ffffff"/>
+    <circle cx="96" cy="48" r="3" fill="#38bdf8"/>
+    <!-- Mount base -->
+    <path d="M50 72 L42 94 L30 94"/>
+    <path d="M38 88 L46 88"/>
+    <!-- LED indicator -->
+    <circle cx="44" cy="56" r="2.5" fill="#ef4444" stroke="none"/>
+    <!-- Signal waves -->
+    <path d="M96 26 A 26 26 0 0 1 112 42" stroke="#60a5fa" stroke-width="4"/>
+    <path d="M102 18 A 38 38 0 0 1 120 40" stroke="#93c5fd" stroke-width="3" opacity="0.7"/>
+  </g>
+</svg>

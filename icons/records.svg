@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="recGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <filter id="shadowRec" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#recGrad)" filter="url(#shadowRec)"/>
+  <!-- Office Record Files / Folder Archive -->
+  <g fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Back Folder Tab -->
+    <path d="M28 44 L48 44 L56 52 L100 52 C104 52 106 54 106 58 L106 90 C106 94 104 96 100 96 L28 96 C24 96 22 94 22 90 L22 50 C22 46 24 44 28 44 Z" fill="#ffffff" fill-opacity="0.15"/>
+    
+    <!-- White Document Paper in Folder -->
+    <rect x="36" y="32" width="56" height="42" rx="4" fill="#ffffff" fill-opacity="0.95" stroke="#ffffff" stroke-width="2"/>
+    <line x1="44" y1="42" x2="68" y2="42" stroke="#0284c7" stroke-width="3"/>
+    <line x1="44" y1="50" x2="84" y2="50" stroke="#0284c7" stroke-width="3"/>
+    <line x1="44" y1="58" x2="76" y2="58" stroke="#0284c7" stroke-width="3"/>
+    
+    <!-- Front Folder Cover Pocket -->
+    <path d="M22 62 L48 62 L56 68 L106 68 L106 90 C106 94 104 96 100 96 L28 96 C24 96 22 94 22 90 Z" fill="#0284c7" stroke="#ffffff" stroke-width="4"/>
+    
+    <!-- Golden Stamp / Seal on Folder -->
+    <circle cx="86" cy="82" r="7" fill="#fde047" stroke="#ffffff" stroke-width="2"/>
+  </g>
+</svg>

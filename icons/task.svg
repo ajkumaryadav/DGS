@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="taskGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <filter id="shadowTask" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#taskGrad)" filter="url(#shadowTask)"/>
+  <!-- Task Clipboard & Checklist -->
+  <g fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Clipboard Board -->
+    <rect x="28" y="28" width="72" height="78" rx="8" fill="#ffffff" fill-opacity="0.15"/>
+    <!-- Top Clip -->
+    <path d="M48 28 L48 20 C48 18 50 16 52 16 L76 16 C78 16 80 18 80 20 L80 28 Z" fill="#fcd34d" stroke="#ffffff" stroke-width="3"/>
+    
+    <!-- Item 1: Checked -->
+    <circle cx="44" cy="46" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+    <polyline points="41,46 43,48 48,43" stroke="#ffffff" stroke-width="2"/>
+    <line x1="56" y1="46" x2="86" y2="46" stroke="#ffffff" stroke-width="3.5"/>
+    
+    <!-- Item 2: Checked -->
+    <circle cx="44" cy="64" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+    <polyline points="41,64 43,66 48,61" stroke="#ffffff" stroke-width="2"/>
+    <line x1="56" y1="64" x2="82" y2="64" stroke="#ffffff" stroke-width="3.5"/>
+    
+    <!-- Item 3: In Progress (Amber) -->
+    <circle cx="44" cy="82" r="6" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+    <line x1="56" y1="82" x2="74" y2="82" stroke="#ffffff" stroke-width="3.5"/>
+  </g>
+</svg>

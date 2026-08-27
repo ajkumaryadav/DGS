@@ -1,0 +1,131 @@
+[
+  {
+    "id": "accc",
+    "name": "ACCC",
+    "path": "/accc/",
+    "devPort": 3000,
+    "description": "District Camera Monitoring System",
+    "icon": "icons/accc.png",
+    "enabled": true,
+    "status": "active",
+    "order": 1,
+    "category": "Monitoring"
+  },
+  {
+    "id": "ecms",
+    "name": "ECMS",
+    "path": "/ecms/",
+    "devPort": 3001,
+    "description": "Election Counting Management System",
+    "icon": "icons/ecms.png",
+    "enabled": true,
+    "status": "active",
+    "order": 2,
+    "category": "Elections"
+  },
+  {
+    "id": "flagship",
+    "name": "Flagship Scheme Monitoring",
+    "path": "/flagship/",
+    "devPort": 8080,
+    "description": "District Flagship Scheme Monitoring",
+    "icon": "icons/flagship.png",
+    "enabled": true,
+    "status": "active",
+    "order": 3,
+    "category": "Monitoring"
+  },
+  {
+    "id": "dak",
+    "name": "Dak Monitoring System",
+    "path": "/dak/",
+    "devPort": 3050,
+    "description": "District Postal & Dak Correspondence Monitoring System",
+    "icon": "icons/dak.png",
+    "enabled": true,
+    "status": "active",
+    "order": 4,
+    "category": "Monitoring"
+  },
+  {
+    "id": "records",
+    "name": "Office Record Management",
+    "path": "/records/",
+    "devPort": 3005,
+    "description": "District Office Records & Document Management System",
+    "icon": "icons/records.png",
+    "enabled": true,
+    "status": "active",
+    "order": 5,
+    "category": "Administration"
+  },
+  {
+    "id": "bams",
+    "name": "Budget Announcement Monitoring System",
+    "path": "/bams/",
+    "devPort": 3100,
+    "description": "District Budget Announcement Monitoring System",
+    "icon": "icons/budget.png",
+    "enabled": true,
+    "status": "active",
+    "order": 6,
+    "category": "Monitoring"
+  },
+  {
+    "id": "ems",
+    "name": "EMS",
+    "path": "/ems/",
+    "devPort": 3333,
+    "description": "Employees Management System",
+    "icon": "icons/ems.png",
+    "enabled": true,
+    "status": "active",
+    "order": 7,
+    "category": "Administration"
+  },
+  {
+    "id": "sampark",
+    "name": "Sampark",
+    "path": "/sampark/",
+    "devPort": 7000,
+    "description": "Sampark Application",
+    "icon": "icons/sampark.png",
+    "enabled": true,
+    "status": "active",
+    "order": 8,
+    "category": "Public Grievance"
+  },
+  {
+    "id": "gods",
+    "name": "Govt Order Drafting System",
+    "path": "#",
+    "description": "District Government Orders & Notifications Drafting System",
+    "icon": "icons/drafting.png",
+    "enabled": true,
+    "status": "coming_soon",
+    "order": 9,
+    "category": "Administration"
+  },
+  {
+    "id": "tms",
+    "name": "Task Monitoring System",
+    "path": "#",
+    "description": "District Administrative Task & Milestone Tracking System",
+    "icon": "icons/task.png",
+    "enabled": true,
+    "status": "coming_soon",
+    "order": 10,
+    "category": "Monitoring"
+  },
+  {
+    "id": "network",
+    "name": "Network Monitoring and Troubleshooting",
+    "path": "#",
+    "description": "District Network Infrastructure & Connectivity Troubleshooting",
+    "icon": "icons/network.png",
+    "enabled": true,
+    "status": "coming_soon",
+    "order": 11,
+    "category": "Monitoring"
+  }
+]

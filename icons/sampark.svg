@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="samparkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <filter id="shadowSampark" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#samparkGrad)" filter="url(#shadowSampark)"/>
+  <!-- Connect / Dialogue & Nodes -->
+  <g fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Speech bubbles overlapping -->
+    <path d="M30 46 C30 36, 42 28, 58 28 C74 28, 86 36, 86 46 C86 52, 80 58, 70 61 L74 72 L62 64 C60 64, 59 64, 58 64 C42 64, 30 56, 30 46 Z" fill="#ffffff" fill-opacity="0.15"/>
+    <!-- Connecting network lines & dots -->
+    <circle cx="48" cy="46" r="3" fill="#ffffff"/>
+    <circle cx="58" cy="46" r="3" fill="#ffffff"/>
+    <circle cx="68" cy="46" r="3" fill="#ffffff"/>
+    <!-- Handshake / Connectivity loop -->
+    <path d="M42 84 C42 74, 54 74, 64 78 C74 82, 86 82, 86 72" stroke="#bae6fd" stroke-width="5"/>
+    <circle cx="42" cy="84" r="5" fill="#ffffff"/>
+    <circle cx="86" cy="72" r="5" fill="#ffffff"/>
+    <circle cx="64" cy="94" r="5" fill="#ffffff"/>
+    <path d="M42 84 L64 94 L86 72" stroke="#ffffff" stroke-width="3" opacity="0.6"/>
+  </g>
+</svg>

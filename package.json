@@ -1,0 +1,16 @@
+{
+  "name": "dgs-launcher",
+  "version": "1.0.0",
+  "description": "District Governance Suite - Application Portal Launcher",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "dgs",
+    "portal",
+    "launcher"
+  ],
+  "author": "District IT Office",
+  "license": "ISC"
+}

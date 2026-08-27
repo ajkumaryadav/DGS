@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="District Governance Suite (DGS) - District IT Office, Khairthal-Tijara Central Application Portal">
+  <title>District Governance Suite (DGS) — Application Portal</title>
+  <link rel="icon" type="image/png" href="emblem/emblem_transparent.png">
+  <link rel="stylesheet" href="style.css?v=2.1">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="header-inner container-fluid">
+      <div class="branding-group">
+        <img src="emblem/emblem_transparent.png" alt="Government of Rajasthan Emblem" class="dgs-logo" width="52" height="52" onerror="this.onerror=null; this.src='icons/dgs-logo.svg';">
+        <div class="header-titles">
+          <div class="title-row">
+            <span class="badge-code">DGS</span>
+            <h1 class="main-title">DISTRICT GOVERNANCE SUITE</h1>
+          </div>
+          <p class="subtitle">District IT Office, Khairthal-Tijara — Application Portal</p>
+        </div>
+      </div>
+      
+      <div class="header-actions-group">
+        <div class="date-badge" id="date-display" title="Current Date">
+          <span id="current-date">Loading date...</span>
+        </div>
+
+        <button type="button" id="open-add-modal-btn" class="btn btn-primary btn-sm" title="Add Application / Website (Press 'N')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Add Application</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout (Full Width, No Dead Space) -->
+  <main class="main-content container-fluid" id="main-content" role="main">
+    
+    <!-- Controls Toolbar -->
+    <section class="portal-toolbar" aria-label="Search and Environment Filters">
+      <div class="search-box-wrapper">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="search" 
+          id="app-search" 
+          class="search-input" 
+          placeholder="Search applications..." 
+          aria-label="Search applications by name or description"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button type="button" id="clear-search-btn" class="clear-search-btn" aria-label="Clear search" title="Clear search" hidden>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="toolbar-actions">
+        <!-- Routing Mode (Direct Ports vs NGINX Proxy) -->
+        <div class="routing-mode-wrapper">
+          <label for="route-mode-select" class="mode-label">Mode:</label>
+          <select id="route-mode-select" class="mode-select" title="Switch between direct backend ports (LAN & Local) and NGINX paths">
+            <option value="direct" selected>Direct Port (LAN & Local)</option>
+            <option value="proxy">NGINX Path (/path/)</option>
+          </select>
+        </div>
+
+        <button type="button" id="reset-apps-btn" class="btn btn-secondary btn-sm" title="Restore default application list" hidden>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          <span>Reset Defaults</span>
+        </button>
+
+        <button type="button" id="export-json-btn" class="btn btn-secondary btn-sm" title="Export current applications.json">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Export JSON</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Category Filter Chips -->
+    <nav class="category-filters-nav" aria-label="Filter applications by category">
+      <div id="category-chips-container" class="category-chips-container">
+        <!-- Injected dynamically by app.js -->
+      </div>
+      <span id="results-count" class="results-count" aria-live="polite">Loading applications...</span>
+    </nav>
+
+    <!-- Application Cards Grid (Full Screen Coverage) -->
+    <section class="cards-section" aria-label="Applications Directory">
+      <div id="apps-grid" class="apps-grid" aria-live="polite">
+        <!-- Application Cards dynamically injected by app.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Add Application Modal Dialog -->
+  <dialog id="add-app-modal" class="app-modal" aria-labelledby="modal-title">
+    <div class="modal-dialog-inner">
+      <div class="modal-header">
+        <h2 id="modal-title" class="modal-title">Add Application / Website</h2>
+        <button type="button" id="close-modal-btn" class="modal-close-btn" aria-label="Close dialog">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="add-app-form" class="modal-form" novalidate>
+        <input type="hidden" id="form-editing-id" value="">
+        <div class="form-row">
+          <div class="form-group flex-2">
+            <label for="form-app-name" class="form-label">Application Name <span class="required">*</span></label>
+            <input type="text" id="form-app-name" class="form-input" placeholder="e.g. Revenue Management System" required>
+          </div>
+          <div class="form-group flex-1">
+            <label for="form-app-port" class="form-label">Port (optional)</label>
+            <input type="number" id="form-app-port" class="form-input" placeholder="e.g. 5000">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="form-app-path" class="form-label">Path or URL <span class="required">*</span></label>
+          <input type="text" id="form-app-path" class="form-input" placeholder="e.g. /revenue/ or http://localhost:5000" required>
+        </div>
+
+        <div class="form-group">
+          <label for="form-app-desc" class="form-label">Description <span class="required">*</span></label>
+          <textarea id="form-app-desc" class="form-textarea" rows="2" placeholder="Brief description of the service..." required></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="form-app-category" class="form-label">Category</label>
+            <input type="text" id="form-app-category" class="form-input" list="category-suggestions" placeholder="e.g. Administration">
+            <datalist id="category-suggestions">
+              <option value="Monitoring">
+              <option value="Administration">
+              <option value="Elections">
+              <option value="Public Grievance">
+              <option value="General">
+            </datalist>
+          </div>
+          <div class="form-group flex-1">
+            <label for="form-app-status" class="form-label">Status</label>
+            <select id="form-app-status" class="form-input">
+              <option value="active">Active</option>
+              <option value="coming_soon">Coming Soon</option>
+            </select>
+          </div>
+          <div class="form-group flex-1">
+            <label for="form-app-order" class="form-label">Sort Order</label>
+            <input type="number" id="form-app-order" class="form-input" value="12" min="1">
+          </div>
+        </div>
+
+        <!-- Preset Icon Picker -->
+        <div class="form-group">
+          <label class="form-label">Select Icon</label>
+          <div class="icon-presets-grid" id="icon-presets-grid">
+            <button type="button" class="preset-icon-btn selected" data-icon="icons/drafting.png" title="Drafting">
+              <img src="icons/drafting.png" alt="Drafting" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/task.png" title="Task Monitoring">
+              <img src="icons/task.png" alt="Task" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/network.png" title="Network Troubleshooting">
+              <img src="icons/network.png" alt="Network" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/records.png" title="Records">
+              <img src="icons/records.png" alt="Records" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/budget.png" title="Budget">
+              <img src="icons/budget.png" alt="Budget" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/dak.png" title="Dak / Mail">
+              <img src="icons/dak.png" alt="Dak" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/portal.png" title="Web Portal">
+              <img src="icons/portal.png" alt="Portal" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/analytics.png" title="Analytics">
+              <img src="icons/analytics.png" alt="Analytics" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/server.png" title="Server">
+              <img src="icons/server.png" alt="Server" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/accc.png" title="Camera">
+              <img src="icons/accc.png" alt="Camera" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/ecms.png" title="Election">
+              <img src="icons/ecms.png" alt="ECMS" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/ems.png" title="Personnel">
+              <img src="icons/ems.png" alt="EMS" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/sampark.png" title="Communication">
+              <img src="icons/sampark.png" alt="Sampark" width="32" height="32">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/flagship.png" title="Flagship">
+              <img src="icons/flagship.png" alt="Flagship" width="32" height="32">
+            </button>
+          </div>
+          <input type="hidden" id="form-app-icon" value="icons/drafting.png">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancel-modal-btn" class="btn btn-secondary btn-sm">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm">Save Application</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Official Government Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner container-fluid">
+      <div class="footer-info-col">
+        <div class="footer-brand-title">
+          <span>District Governance Suite</span>
+          <span class="footer-bullet">•</span>
+          <span class="footer-district">District IT Office, Khairthal-Tijara</span>
+          <span class="footer-bullet">•</span>
+          <span class="footer-version">Version 1.0</span>
+        </div>
+        <p class="footer-credits">
+          Designed by <strong>Deputy Director (ACP)</strong> &nbsp;|&nbsp; 
+          For support, email to <a href="mailto:dlo.doit.khairthal@rajasthan.gov.in" class="support-email-link">dlo.doit.khairthal@rajasthan.gov.in</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core JavaScript -->
+  <script src="app.js?v=2.1"></script>
+</body>
+</html>

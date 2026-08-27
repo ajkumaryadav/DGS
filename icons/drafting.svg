@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="draftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#3730a3"/>
+    </linearGradient>
+    <filter id="shadowDraft" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#draftGrad)" filter="url(#shadowDraft)"/>
+  <!-- Official Order Document & Quill/Pen -->
+  <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Document Base -->
+    <rect x="28" y="24" width="56" height="80" rx="6" fill="#ffffff" fill-opacity="0.15" stroke="#ffffff" stroke-width="4"/>
+    <line x1="38" y1="42" x2="68" y2="42" stroke="#ffffff" stroke-width="4"/>
+    <line x1="38" y1="54" x2="74" y2="54" stroke="#ffffff" stroke-width="3"/>
+    <line x1="38" y1="66" x2="64" y2="66" stroke="#ffffff" stroke-width="3"/>
+    <line x1="38" y1="78" x2="56" y2="78" stroke="#ffffff" stroke-width="3"/>
+    
+    <!-- Red Official Seal on Document -->
+    <circle cx="48" cy="90" r="4" fill="#f43f5e" stroke="#ffffff" stroke-width="1.5"/>
+
+    <!-- Fountain Pen / Drafting Stylus -->
+    <path d="M96 28 L104 36 L72 78 L60 82 L64 70 Z" fill="#fbbf24" stroke="#ffffff" stroke-width="3"/>
+    <line x1="88" y1="36" x2="96" y2="44" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="63" cy="79" r="1" fill="#ffffff"/>
+  </g>
+</svg>

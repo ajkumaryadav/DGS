@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="deccGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4338ca"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <filter id="shadowDecc" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#deccGrad)" filter="url(#shadowDecc)"/>
+  <!-- Counting Chart & Calculation Graphic -->
+  <g fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Baseline -->
+    <line x1="28" y1="96" x2="100" y2="96"/>
+    <!-- Bars -->
+    <rect x="36" y="68" width="12" height="28" rx="3" fill="#ffffff" fill-opacity="0.4"/>
+    <rect x="58" y="48" width="12" height="48" rx="3" fill="#ffffff" fill-opacity="0.6"/>
+    <rect x="80" y="32" width="12" height="64" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+    <!-- Growth curve arrow -->
+    <path d="M34 60 Q 60 48, 86 26" stroke="#a5b4fc" stroke-width="4" stroke-dasharray="2 0"/>
+    <path d="M78 24 L88 24 L88 34" stroke="#a5b4fc" stroke-width="4"/>
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="flagshipGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <filter id="shadowFlagship" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#flagshipGrad)" filter="url(#shadowFlagship)"/>
+  <!-- Flagship Star & Flag Shield Banner -->
+  <g fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Flag / Pennant -->
+    <path d="M34 26 L34 102" stroke-width="6"/>
+    <path d="M34 32 L88 46 L34 66 Z" fill="#ffffff" fill-opacity="0.9" stroke="#ffffff" stroke-width="3"/>
+    <!-- Star inside flag -->
+    <polygon points="56,42 59,48 66,48 60,53 62,60 56,55 50,60 52,53 46,48 53,48" fill="#b45309" stroke="none"/>
+    <!-- Progress Target Rings -->
+    <circle cx="94" cy="80" r="16" stroke="#fef3c7" stroke-width="4" fill="#ffffff" fill-opacity="0.2"/>
+    <circle cx="94" cy="80" r="8" stroke="#fde68a" stroke-width="4"/>
+    <circle cx="94" cy="80" r="3" fill="#ffffff"/>
+  </g>
+</svg>
