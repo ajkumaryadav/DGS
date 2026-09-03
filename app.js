@@ -7,7 +7,7 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'dgs_applications_registry_v4';
+  const STORAGE_KEY = 'dgs_applications_registry_v6';
   const ROUTE_MODE_KEY = 'dgs_route_mode_v2';
 
   // Default baseline application suite
