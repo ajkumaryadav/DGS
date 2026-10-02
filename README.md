@@ -1,129 +1,58 @@
-# District Governance Suite (DGS) Launcher
+# District Governance Suite (DGS) — Portal Launcher & Service Manager
 
-A lightweight, static web-based application launcher for the District IT Office and District Governance Suite.
+A high-performance, unified application portal, workspace manager, and Windows Service controller built for the District IT Office, Khairthal-Tijara.
 
 ---
 
-## How to Run the Launcher Locally
+## 🚀 Key Features
 
-Because the launcher dynamically loads `applications.json`, it must be served via a web server (not opened directly via `file://`).
+### 1. Dual Port 80 & Port 8000 Automatic Listener
+- **Port 80 (Standard HTTP)**: Allows immediate access via `http://localhost/` or `http://<IP>/` without needing to type a port number.
+- **Port 8000**: Secondary / direct management port (`http://localhost:8000/`).
 
-### Option 1: Python Built-in Server
-Open PowerShell or Command Prompt inside the `DGS` folder and run:
+### 2. Embedded In-App Frame Workspace
+- Clicking any application opens it inside a fullscreen, embedded **In-App Frame** within the DGS dashboard.
+- Includes Top Control Bar with **Reload**, **Open in New Tab**, **Toggle Fullscreen**, and **Close**.
+- Switchable mode toggle in toolbar: **"In-App Frame"** (default) vs **"New Tab"**.
+
+### 3. Role-Based Multi-User Admin & Authentication
+- **Default Master Administrator**:
+  - **User ID**: `admin`
+  - **Password**: `dgs@admin2026`
+- **User Management**:
+  - Add new users (Super Administrator, Administrator, Operator).
+  - Edit full names, roles, and reset passwords.
+  - Delete operators/admins (protects the master superadmin).
+- **Protected Operations**: Adding/editing apps, deleting apps, starting/stopping/restarting services, and managing users require admin login.
+
+### 4. Direct Disk Persistence for Applications (`applications.json`)
+- All added apps, edits, reordering, and deletions are saved directly to `applications.json` on disk via `/api/applications`.
+- Changes persist across PC reboots, browser cache resets, localhost, and LAN connections.
+
+### 5. Automatic 24/7 Windows Service Startup on PC Boot
+- **`install-dgs-launcher-service.bat`**: Installs DGS Launcher (`server.js`) as an automatic Windows Service with NSSM that boots on PC startup.
+- **`setup-autostart-all-services.bat`**: Configures all district services (`bams`, `DakMonitoring`, `DistrictFlagshipMonitoring`, `ACCC-WEB`, `ACCC-API`, `SamparkWeb`, `SamparkAPI`, `tcms`, `DGS-Nginx`, `DGS-Launcher-Server`) to start automatically (`start= auto`) and grants full Start/Stop permissions.
+- **`grant-service-permissions.bat`**: Grants service permissions to authenticated users to prevent UAC errors when controlling services from the web portal.
+
+---
+
+## 🛠️ Quick Commands
 
 ```bash
-# Use a free port such as 8000 or 9000 (do not use 8080 as Flagship Scheme Monitoring is running on 8080)
-python -m http.server 8000
-```
-Then open your browser at: `http://localhost:8000`
-
-> **Important: Reserved Server Ports**
-> Do **NOT** run test servers on port `8080` or any of the following ports actively used by district backend applications and Windows services:
-> - `8080`: **Flagship Scheme Monitoring** (Active Windows Service)
-> - `3000`: **ACCC** (District Camera Monitoring)
-> - `3001`: **ECMS** (Election Counting Management System)
-> - `3050`: **Dak Monitoring System** (Postal & Correspondence Monitoring)
-> - `3100`: **Office Record Management** (Office Records & Documents)
-> - `3333`: **EMS** (Employees Management System)
-> - `4000`: **ACCC API Backend**
-> - `7000`: **Sampark Application**
-
-### Option 2: Node.js (`npm run dev` or `npx serve`)
-```bash
+# Start directly in dev/test mode:
 npm run dev
-# or: npx serve . -p 8000
-```
-Then open your browser at: `http://localhost:8000`
+# or: node server.js
 
-### Option 3: Production NGINX
-Place the `DGS` folder contents into your NGINX static html directory and serve on standard HTTP port `80`. NGINX will proxy `/flagship/`, `/dak/`, `/records/`, `/accc/`, etc. internally.
+# Install DGS Launcher as an Automatic Windows Service:
+install-dgs-launcher-service.bat (Right-click -> Run as Administrator)
+
+# Configure all district services to Auto-Start on boot:
+setup-autostart-all-services.bat (Right-click -> Run as Administrator)
+```
 
 ---
 
-## How to Add or Remove Applications
-
-### Adding an Application via Web UI
-1. Click the **"+ Add Application"** button in the top right header (or press **`N`** on your keyboard).
-2. Enter the **Application Name**, **Path/URL** (e.g. `/records/` or `http://localhost:3100`), and **Description**.
-3. Choose a category and pick an icon from the built-in preset selector.
-4. Click **Save Application**.
-
-### Removing an Application via Web UI
-- Hover over any application card and click the **`✕`** icon in the top right corner of the card.
-- Confirm the prompt to remove the card from the dashboard.
-- To restore original defaults, click **"Reset Defaults"** in the top toolbar.
-
-### Adding an Application by Editing `applications.json`
-Open `applications.json` and add a new entry:
-
-```json
-{
-  "id": "bams",
-  "name": "BAMS",
-  "path": "/bams/",
-  "devPort": 8000,
-  "description": "Biometric Attendance Monitoring System",
-  "icon": "icons/bams.png",
-  "enabled": true,
-  "order": 8,
-  "category": "Administration"
-}
-```
-
-Place the corresponding icon (PNG or SVG) into the `icons/` folder. The application card will immediately appear on the dashboard upon refresh.
-
----
-
-## How to Disable an Application
-
-To hide an application from the launcher without removing its configuration, set `"enabled": false` in `applications.json`:
-
-```json
-{
-  "id": "sampark",
-  "name": "Sampark",
-  "path": "/sampark/",
-  "description": "Sampark Application",
-  "icon": "icons/sampark.png",
-  "enabled": false,
-  "order": 4
-}
-```
-
-Disabled applications are automatically excluded from the portal dashboard and search results.
-
----
-
-## How to Change Application Order
-
-Adjust the numeric value of the `"order"` field in `applications.json`:
-
-```json
-{
-  "id": "accc",
-  "name": "ACCC",
-  "order": 1
-}
-```
-
-Applications are automatically sorted in ascending order (`1`, `2`, `3`, etc.).
-
----
-
-## How to Change an Application Description or Icon
-
-In `applications.json`, update the `"description"` or `"icon"` fields:
-
-```json
-{
-  "id": "accc",
-  "name": "ACCC",
-  "path": "/accc/",
-  "description": "Updated description text here",
-  "icon": "icons/new-icon.png",
-  "enabled": true,
-  "order": 1
-}
-```
-
-If an icon image is missing or fails to load, the launcher will automatically fall back to the generic system icon (`icons/generic.svg`).
+## 🌐 URLs & Ports
+- **Standard Portal**: [http://localhost/](http://localhost/) or [http://127.0.0.1/](http://127.0.0.1/)
+- **Direct Port**: [http://localhost:8000/](http://localhost:8000/)
+- **LAN Access**: `http://<YOUR_IP>/` (e.g. `http://10.70.12.73/`)

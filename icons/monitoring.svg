@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="monGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e40af"/>
+    </linearGradient>
+    <filter id="shadowMon" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#monGrad)" filter="url(#shadowMon)"/>
+  <!-- CCTV / Camera Radar Eye -->
+  <g fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Camera Body -->
+    <path d="M36 44 L78 44 L92 56 L92 72 L78 84 L36 84 Z" fill="#ffffff" fill-opacity="0.15"/>
+    <!-- Camera Lens / Iris -->
+    <circle cx="56" cy="64" r="14" fill="#ffffff" fill-opacity="0.2"/>
+    <circle cx="56" cy="64" r="6" fill="#60a5fa" stroke="none"/>
+    <!-- Front Glass Bevel -->
+    <line x1="92" y1="56" x2="98" y2="52"/>
+    <line x1="92" y1="72" x2="98" y2="76"/>
+    <!-- Stand / Mount -->
+    <path d="M56 84 L56 96 L74 100"/>
+    <!-- Active Recording Red Dot -->
+    <circle cx="44" cy="52" r="3" fill="#ef4444" stroke="none"/>
+  </g>
+</svg>

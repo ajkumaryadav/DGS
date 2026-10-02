@@ -4,6 +4,11 @@
     "name": "ACCC",
     "path": "/accc/",
     "devPort": 3000,
+    "serviceName": "ACCC-WEB",
+    "services": [
+      "ACCC-WEB",
+      "ACCC-API"
+    ],
     "description": "District Camera Monitoring System",
     "icon": "icons/accc.png",
     "enabled": true,
@@ -28,6 +33,10 @@
     "name": "Flagship Scheme Monitoring",
     "path": "/flagship/",
     "devPort": 8080,
+    "serviceName": "DistrictFlagshipMonitoring",
+    "services": [
+      "DistrictFlagshipMonitoring"
+    ],
     "description": "District Flagship Scheme Monitoring",
     "icon": "icons/flagship.png",
     "enabled": true,
@@ -40,6 +49,10 @@
     "name": "Dak Monitoring System",
     "path": "/dak/",
     "devPort": 3050,
+    "serviceName": "DakMonitoring",
+    "services": [
+      "DakMonitoring"
+    ],
     "description": "District Postal & Dak Correspondence Monitoring System",
     "icon": "icons/dak.png",
     "enabled": true,
@@ -64,6 +77,10 @@
     "name": "Budget Announcement Monitoring System",
     "path": "/bams/",
     "devPort": 3100,
+    "serviceName": "bams",
+    "services": [
+      "bams"
+    ],
     "description": "District Budget Announcement Monitoring System",
     "icon": "icons/budget.png",
     "enabled": true,
@@ -88,6 +105,11 @@
     "name": "Sampark",
     "path": "/sampark/",
     "devPort": 7000,
+    "serviceName": "SamparkWeb",
+    "services": [
+      "SamparkWeb",
+      "SamparkAPI"
+    ],
     "description": "Sampark Application",
     "icon": "icons/sampark.png",
     "enabled": true,
@@ -103,13 +125,17 @@
     "icon": "icons/drafting.png",
     "enabled": true,
     "status": "coming_soon",
-    "order": 9,
+    "order": 10,
     "category": "Administration"
   },
   {
     "id": "tms",
     "name": "Task Monitoring System",
     "path": "#",
+    "serviceName": "tcms",
+    "services": [
+      "tcms"
+    ],
     "description": "District Administrative Task & Milestone Tracking System",
     "icon": "icons/task.png",
     "enabled": true,
@@ -127,5 +153,21 @@
     "status": "coming_soon",
     "order": 11,
     "category": "Monitoring"
+  },
+  {
+    "id": "typing",
+    "name": "Typing Exam (GTES)",
+    "path": "/gtes/",
+    "devPort": 3800,
+    "serviceName": "gtes",
+    "services": [
+      "gtes"
+    ],
+    "description": "Typing examination and skill evaluation system",
+    "icon": "icons/education.svg",
+    "enabled": true,
+    "status": "active",
+    "order": 9,
+    "category": "General"
   }
 ]

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="storeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#c2410c"/>
+    </linearGradient>
+    <filter id="shadowStore" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#storeGrad)" filter="url(#shadowStore)"/>
+  <!-- Store / Warehouse Package & Cart -->
+  <g fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Isometric Box / Package -->
+    <path d="M64 28 L94 44 L64 60 L34 44 Z" fill="#ffffff" fill-opacity="0.2"/>
+    <path d="M34 44 L34 76 L64 92 L64 60 Z" fill="#ffffff" fill-opacity="0.1"/>
+    <path d="M94 44 L94 76 L64 92 L64 60 Z" fill="#ffffff" fill-opacity="0.15"/>
+    <!-- Box Seams -->
+    <line x1="64" y1="28" x2="64" y2="60"/>
+    <line x1="34" y1="44" x2="64" y2="60"/>
+    <line x1="94" y1="44" x2="64" y2="60"/>
+    <!-- Tape / Ribbon -->
+    <path d="M49 36 L79 52" stroke="#fed7aa" stroke-width="3"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": "usr_admin",
+      "username": "admin",
+      "fullName": "District Administrator",
+      "passwordHash": "2df6bcb41adb6d68a7e520535b0c055108f735a58f1b17139cf12bcd7acfb6e8",
+      "role": "superadmin",
+      "createdAt": "2026-10-02T13:45:00.000Z",
+      "updatedAt": "2026-10-02T13:45:00.000Z"
+    }
+  ]
+}

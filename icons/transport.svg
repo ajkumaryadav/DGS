@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="transGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#3730a3"/>
+    </linearGradient>
+    <filter id="shadowTrans" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#transGrad)" filter="url(#shadowTrans)"/>
+  <!-- Bus / Vehicle Transport Fleet -->
+  <g fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Vehicle Body -->
+    <rect x="30" y="32" width="68" height="56" rx="10" fill="#ffffff" fill-opacity="0.15"/>
+    <!-- Windshield & Windows -->
+    <rect x="38" y="40" width="52" height="20" rx="4" fill="#ffffff" fill-opacity="0.25"/>
+    <line x1="64" y1="40" x2="64" y2="60" stroke="#4f46e5" stroke-width="2"/>
+    <!-- Headlights -->
+    <circle cx="42" cy="74" r="4" fill="#fde047" stroke="none"/>
+    <circle cx="86" cy="74" r="4" fill="#fde047" stroke="none"/>
+    <!-- Grille -->
+    <line x1="54" y1="74" x2="74" y2="74"/>
+    <!-- Wheels -->
+    <rect x="36" y="88" width="12" height="8" rx="2" fill="#1e1b4b"/>
+    <rect x="80" y="88" width="12" height="8" rx="2" fill="#1e1b4b"/>
+  </g>
+</svg>

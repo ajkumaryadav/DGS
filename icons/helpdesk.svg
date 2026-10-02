@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="helpGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d9488"/>
+      <stop offset="100%" stop-color="#115e59"/>
+    </linearGradient>
+    <filter id="shadowHelp" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#helpGrad)" filter="url(#shadowHelp)"/>
+  <!-- Headset / Citizen Support Call Center -->
+  <g fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Headband Arc -->
+    <path d="M36 68 C36 44 92 44 92 68" stroke="#ffffff" stroke-width="5"/>
+    <!-- Left Ear Cup -->
+    <rect x="28" y="62" width="14" height="24" rx="6" fill="#ffffff" fill-opacity="0.25"/>
+    <!-- Right Ear Cup -->
+    <rect x="86" y="62" width="14" height="24" rx="6" fill="#ffffff" fill-opacity="0.25"/>
+    <!-- Microphone Boom -->
+    <path d="M92 78 C92 94 76 98 62 98"/>
+    <!-- Mic Tip -->
+    <circle cx="58" cy="98" r="4" fill="#2dd4bf" stroke="none"/>
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="eduGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <filter id="shadowEdu" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#eduGrad)" filter="url(#shadowEdu)"/>
+  <!-- Graduation Cap & Open Book -->
+  <g fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Cap Diamond -->
+    <polygon points="64,28 104,46 64,64 24,46" fill="#ffffff" fill-opacity="0.2"/>
+    <!-- Cap Skullcap -->
+    <path d="M40 54 V74 C40 84 88 84 88 74 V54"/>
+    <!-- Tassel -->
+    <path d="M96 48 V76" stroke="#fde047" stroke-width="3"/>
+    <circle cx="96" cy="78" r="3" fill="#fde047" stroke="none"/>
+    <!-- Open Book -->
+    <path d="M36 96 C48 90 60 92 64 96 C68 92 80 90 92 96" stroke="#ffffff" stroke-width="4"/>
+  </g>
+</svg>

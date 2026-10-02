@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="healthGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+    <filter id="shadowHealth" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#healthGrad)" filter="url(#shadowHealth)"/>
+  <!-- Medical Cross & Pulse Wave -->
+  <g fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Medical Shield/Cross -->
+    <path d="M54 30 H74 V50 H94 V70 H74 V90 H54 V70 H34 V50 H54 Z" fill="#ffffff" fill-opacity="0.2" stroke="#ffffff" stroke-width="3"/>
+    <!-- Heartbeat Pulse Line -->
+    <path d="M28 64 L46 64 L54 48 L62 80 L72 56 L78 64 L100 64" stroke="#ffffff" stroke-width="4.5"/>
+  </g>
+</svg>

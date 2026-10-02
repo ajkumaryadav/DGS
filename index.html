@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="District Governance Suite (DGS) - District IT Office, Khairthal-Tijara Central Application Portal">
-  <title>District Governance Suite (DGS) — Application Portal</title>
+  <meta name="description" content="District Governance Suite (DGS) - District IT Office, Khairthal-Tijara Central Application Portal & Service Manager">
+  <title>District Governance Suite (DGS) — Application Portal & Service Manager</title>
   <link rel="icon" type="image/png" href="emblem/emblem_transparent.png">
-  <link rel="stylesheet" href="style.css?v=2.1">
+  <link rel="stylesheet" href="style.css?v=3.2">
 </head>
 <body>
   <!-- Header -->
   <header class="site-header" role="banner">
     <div class="header-inner container-fluid">
       <div class="branding-group">
-        <img src="emblem/emblem_transparent.png" alt="Government of Rajasthan Emblem" class="dgs-logo" width="52" height="52" onerror="this.onerror=null; this.src='icons/dgs-logo.svg';">
+        <img src="emblem/emblem_transparent.png" alt="Government of Rajasthan Emblem" class="dgs-logo" width="46" height="46" onerror="this.onerror=null; this.src='icons/dgs-logo.svg';">
         <div class="header-titles">
           <div class="title-row">
             <span class="badge-code">DGS</span>
@@ -24,10 +24,25 @@
       </div>
       
       <div class="header-actions-group">
+        <!-- Live Services Health Status -->
+        <button type="button" id="refresh-services-btn" class="btn btn-secondary btn-sm service-health-btn" title="Refresh Live Status of All District Services (Press 'R')">
+          <span class="health-pulse-dot dot-gray" id="header-health-dot" aria-hidden="true"></span>
+          <span id="header-health-text">Checking Services...</span>
+          <svg class="refresh-spin-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+          </svg>
+        </button>
+
         <div class="date-badge" id="date-display" title="Current Date">
           <span id="current-date">Loading date...</span>
         </div>
 
+        <!-- Admin Auth Controls & Profile -->
+        <div class="auth-controls-group" id="auth-controls-group">
+          <!-- Populated dynamically by app.js (Login / Admin Badge / User Dropdown) -->
+        </div>
+
+        <!-- Add App Button (Visible to logged in admins or triggers login) -->
         <button type="button" id="open-add-modal-btn" class="btn btn-primary btn-sm" title="Add Application / Website (Press 'N')">
           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -39,7 +54,7 @@
     </div>
   </header>
 
-  <!-- Main Content Layout (Full Width, No Dead Space) -->
+  <!-- Main Content Layout -->
   <main class="main-content container-fluid" id="main-content" role="main">
     
     <!-- Controls Toolbar -->
@@ -53,8 +68,8 @@
           type="search" 
           id="app-search" 
           class="search-input" 
-          placeholder="Search applications..." 
-          aria-label="Search applications by name or description"
+          placeholder="Search applications or services... (Press '/')" 
+          aria-label="Search applications by name, description, or service"
           autocomplete="off"
           spellcheck="false"
         >
@@ -67,6 +82,22 @@
       </div>
 
       <div class="toolbar-actions">
+        <!-- In-App Frame Launcher Mode Switch -->
+        <div class="launch-mode-toggle" title="Choose whether clicking an application opens inside this DGS portal frame or in an external browser tab">
+          <label class="toggle-switch-label" for="launch-target-toggle">
+            <span class="toggle-icon-label">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+              <span id="frame-toggle-text">In-App Frame</span>
+            </span>
+            <input type="checkbox" id="launch-target-toggle" class="toggle-switch-input" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
         <!-- Routing Mode (Direct Ports vs NGINX Proxy) -->
         <div class="routing-mode-wrapper">
           <label for="route-mode-select" class="mode-label">Mode:</label>
@@ -103,7 +134,7 @@
       <span id="results-count" class="results-count" aria-live="polite">Loading applications...</span>
     </nav>
 
-    <!-- Application Cards Grid (Full Screen Coverage) -->
+    <!-- Application Cards Grid (High Density, Fluid Layout) -->
     <section class="cards-section" aria-label="Applications Directory">
       <div id="apps-grid" class="apps-grid" aria-live="polite">
         <!-- Application Cards dynamically injected by app.js -->
@@ -112,7 +143,179 @@
 
   </main>
 
-  <!-- Add Application Modal Dialog -->
+  <!-- ======================================================================
+       IN-APP EMBEDDED FRAME / WORKSPACE MODAL
+       ====================================================================== -->
+  <div id="inapp-frame-modal" class="inapp-frame-modal" aria-hidden="true" role="dialog" aria-labelledby="inapp-title">
+    <div class="inapp-frame-wrapper">
+      <!-- In-App Top Bar -->
+      <div class="inapp-topbar">
+        <div class="inapp-topbar-left">
+          <img id="inapp-app-icon" src="icons/generic.svg" alt="" class="inapp-app-icon" width="26" height="26">
+          <div class="inapp-app-meta">
+            <h2 id="inapp-title" class="inapp-app-title">Application Workspace</h2>
+            <div class="inapp-sub-meta">
+              <span id="inapp-category-badge" class="inapp-badge">General</span>
+              <span id="inapp-url-display" class="inapp-url-link">http://localhost:3000</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="inapp-topbar-actions">
+          <!-- Reload Frame -->
+          <button type="button" id="inapp-reload-btn" class="inapp-ctrl-btn" title="Reload Frame (Ctrl+R)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            <span>Reload</span>
+          </button>
+
+          <!-- Open in Separate Tab (Popout) -->
+          <button type="button" id="inapp-popout-btn" class="inapp-ctrl-btn" title="Open in New Browser Tab / Window">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            <span>New Tab</span>
+          </button>
+
+          <!-- Toggle Fullscreen -->
+          <button type="button" id="inapp-fullscreen-btn" class="inapp-ctrl-btn" title="Toggle Fullscreen Mode">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+            </svg>
+          </button>
+
+          <!-- Close Modal -->
+          <button type="button" id="inapp-close-btn" class="inapp-ctrl-btn inapp-close-btn" title="Close Frame (Esc)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- In-App Iframe Container -->
+      <div class="inapp-body">
+        <div id="inapp-loader" class="inapp-loader">
+          <div class="inapp-spinner"></div>
+          <p>Connecting to application frame...</p>
+        </div>
+
+        <iframe id="inapp-iframe" class="inapp-iframe" src="about:blank" title="Application Content Frame" allow="fullscreen; clipboard-read; clipboard-write; geolocation; camera; microphone"></iframe>
+
+        <!-- Fallback banner for X-Frame-Options blocked sites -->
+        <div id="inapp-fallback-notice" class="inapp-fallback-notice" hidden>
+          <div class="fallback-icon">⚠️</div>
+          <div class="fallback-text">
+            <h4>Application Frame Restricted by Security Policy</h4>
+            <p>If this application restricts embedded frames (X-Frame-Options), you can launch it in a full tab.</p>
+          </div>
+          <button type="button" id="inapp-fallback-open-btn" class="btn btn-primary btn-sm">Launch in Full Tab</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       USER MANAGEMENT MODAL (ADMIN / SUPERADMIN)
+       ====================================================================== -->
+  <dialog id="user-mgmt-modal" class="app-modal user-mgmt-modal" aria-labelledby="user-mgmt-title">
+    <div class="modal-dialog-inner modal-dialog-lg">
+      <div class="modal-header">
+        <div class="service-modal-header-info">
+          <span class="badge-code" style="background-color: #1e3a8a;">USERS</span>
+          <h2 id="user-mgmt-title" class="modal-title">System User Management</h2>
+        </div>
+        <button type="button" id="close-user-mgmt-btn" class="modal-close-btn" aria-label="Close dialog">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="user-mgmt-body">
+        <div class="user-mgmt-toolbar">
+          <div class="user-mgmt-stats">
+            <span id="user-count-badge" class="stats-badge">1 Administrator</span>
+          </div>
+          <button type="button" id="btn-show-add-user" class="btn btn-primary btn-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Add New User</span>
+          </button>
+        </div>
+
+        <!-- Add / Edit User Form (Collapsible) -->
+        <div id="user-form-card" class="user-form-card" hidden>
+          <h3 id="user-form-title" class="user-form-heading">Create New Administrator / Operator</h3>
+          <form id="user-upsert-form" class="modal-form" novalidate>
+            <input type="hidden" id="user-form-id" value="">
+            
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label for="u-username" class="form-label">User ID (Login Username) <span class="required">*</span></label>
+                <input type="text" id="u-username" class="form-input" placeholder="e.g. jdoe" required autocomplete="off">
+              </div>
+              <div class="form-group flex-1">
+                <label for="u-fullname" class="form-label">Full Name <span class="required">*</span></label>
+                <input type="text" id="u-fullname" class="form-input" placeholder="e.g. John Doe, ACP" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label for="u-role" class="form-label">Role</label>
+                <select id="u-role" class="form-input">
+                  <option value="superadmin">Super Administrator (Full Controls & User Mgmt)</option>
+                  <option value="admin" selected>Administrator (Apps & Service Controls)</option>
+                  <option value="operator">Operator (Service Restart Only)</option>
+                </select>
+              </div>
+              <div class="form-group flex-1">
+                <label for="u-password" class="form-label">Password <span id="u-pwd-req" class="required">*</span></label>
+                <input type="password" id="u-password" class="form-input" placeholder="Enter password (min 4 chars)" autocomplete="new-password">
+              </div>
+            </div>
+
+            <div class="form-actions-inline">
+              <button type="button" id="btn-cancel-user-form" class="btn btn-secondary btn-sm">Cancel</button>
+              <button type="submit" class="btn btn-primary btn-sm" id="btn-save-user">Save User</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Users Table -->
+        <div class="users-table-wrapper">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Full Name</th>
+                <th>Role</th>
+                <th>Created Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-tbody">
+              <!-- Rendered dynamically by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ======================================================================
+       ADD / EDIT APPLICATION MODAL DIALOG
+       ====================================================================== -->
   <dialog id="add-app-modal" class="app-modal" aria-labelledby="modal-title">
     <div class="modal-dialog-inner">
       <div class="modal-header">
@@ -148,6 +351,74 @@
           <textarea id="form-app-desc" class="form-textarea" rows="2" placeholder="Brief description of the service..." required></textarea>
         </div>
 
+        <div class="form-group">
+          <div class="form-label-row">
+            <label for="form-app-service" class="form-label">Windows Service Name (optional)</label>
+            <button type="button" id="toggle-nssm-panel-btn" class="btn-link-action" title="Toggle 1-Click Windows Service (NSSM) Auto-Start installer">
+              ⚙️ 1-Click NSSM Service Setup
+            </button>
+          </div>
+          <input type="text" id="form-app-service" class="form-input" list="service-suggestions" placeholder="e.g. gtes or bams or DakMonitoring">
+          <datalist id="service-suggestions">
+            <option value="gtes">
+            <option value="bams">
+            <option value="DakMonitoring">
+            <option value="DistrictFlagshipMonitoring">
+            <option value="ACCC-WEB">
+            <option value="ACCC-API">
+            <option value="SamparkWeb">
+            <option value="SamparkAPI">
+            <option value="tcms">
+            <option value="DGS-Nginx">
+            <option value="DGS-Launcher-Server">
+          </datalist>
+        </div>
+
+        <!-- 1-Click NSSM Windows Service Registration Box (Collapsible) -->
+        <div id="nssm-service-box" class="nssm-service-box" hidden>
+          <div class="nssm-box-header">
+            <span class="nssm-title">⚡ 1-Click Windows Service Registration (NSSM)</span>
+            <span id="nssm-status-badge" class="nssm-badge-offline">Not Installed</span>
+          </div>
+
+          <div style="display: flex; gap: 0.35rem; margin-bottom: 0.25rem; flex-wrap: wrap;">
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-nssm-preset-next" style="font-size: 0.72rem; padding: 0.2rem 0.5rem;" title="Fill Next.js app preset">
+              Next.js / React (Port 3800)
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-nssm-preset-node" style="font-size: 0.72rem; padding: 0.2rem 0.5rem;" title="Fill Node.js server.js preset">
+              Node (server.js)
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-nssm-preset-cmd" style="font-size: 0.72rem; padding: 0.2rem 0.5rem;" title="Fill CMD npm start preset">
+              CMD (npm start)
+            </button>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="nssm-exe-path" class="form-label">Executable Path</label>
+              <input type="text" id="nssm-exe-path" class="form-input" placeholder="C:\Program Files\nodejs\node.exe" value="C:\Program Files\nodejs\node.exe">
+            </div>
+            <div class="form-group flex-1">
+              <label for="nssm-app-dir" class="form-label">App Directory</label>
+              <input type="text" id="nssm-app-dir" class="form-input" placeholder="e.g. D:\aj\gtes">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="nssm-app-args" class="form-label">Arguments (e.g. server.js or npm start)</label>
+            <input type="text" id="nssm-app-args" class="form-input" placeholder="e.g. server.js or node_modules/next/dist/bin/next start -p 3800">
+          </div>
+          <div class="nssm-actions-row">
+            <button type="button" id="btn-nssm-register" class="btn btn-primary btn-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              <span>Register & Start Service</span>
+            </button>
+            <button type="button" id="btn-nssm-deregister" class="btn btn-danger btn-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              <span>Deregister (Uninstall)</span>
+            </button>
+          </div>
+        </div>
+
         <div class="form-row">
           <div class="form-group flex-1">
             <label for="form-app-category" class="form-label">Category</label>
@@ -157,6 +428,12 @@
               <option value="Administration">
               <option value="Elections">
               <option value="Public Grievance">
+              <option value="Finance & Revenue">
+              <option value="Tech & IT">
+              <option value="Store & Logistics">
+              <option value="Health & Medical">
+              <option value="Education">
+              <option value="Transport">
               <option value="General">
             </datalist>
           </div>
@@ -175,52 +452,91 @@
 
         <!-- Preset Icon Picker -->
         <div class="form-group">
-          <label class="form-label">Select Icon</label>
+          <div class="form-label-row">
+            <label class="form-label">Select Icon Preset</label>
+            <span class="icon-preset-hint">Presets: Election, Store, Monitoring, Tech, Health, Govt, etc.</span>
+          </div>
           <div class="icon-presets-grid" id="icon-presets-grid">
-            <button type="button" class="preset-icon-btn selected" data-icon="icons/drafting.png" title="Drafting">
-              <img src="icons/drafting.png" alt="Drafting" width="32" height="32">
+            <button type="button" class="preset-icon-btn selected" data-icon="icons/election.svg" title="Election & Voting">
+              <img src="icons/election.svg" alt="Election" width="28" height="28">
             </button>
-            <button type="button" class="preset-icon-btn" data-icon="icons/task.png" title="Task Monitoring">
-              <img src="icons/task.png" alt="Task" width="32" height="32">
+            <button type="button" class="preset-icon-btn" data-icon="icons/store.svg" title="Store & Inventory">
+              <img src="icons/store.svg" alt="Store" width="28" height="28">
             </button>
-            <button type="button" class="preset-icon-btn" data-icon="icons/network.png" title="Network Troubleshooting">
-              <img src="icons/network.png" alt="Network" width="32" height="32">
+            <button type="button" class="preset-icon-btn" data-icon="icons/monitoring.svg" title="Surveillance & Monitoring">
+              <img src="icons/monitoring.svg" alt="Monitoring" width="28" height="28">
             </button>
-            <button type="button" class="preset-icon-btn" data-icon="icons/records.png" title="Records">
-              <img src="icons/records.png" alt="Records" width="32" height="32">
+            <button type="button" class="preset-icon-btn" data-icon="icons/tech.svg" title="Technology & IT Systems">
+              <img src="icons/tech.svg" alt="Tech" width="28" height="28">
             </button>
-            <button type="button" class="preset-icon-btn" data-icon="icons/budget.png" title="Budget">
-              <img src="icons/budget.png" alt="Budget" width="32" height="32">
+            <button type="button" class="preset-icon-btn" data-icon="icons/health.svg" title="Health & Hospital">
+              <img src="icons/health.svg" alt="Health" width="28" height="28">
             </button>
-            <button type="button" class="preset-icon-btn" data-icon="icons/dak.png" title="Dak / Mail">
-              <img src="icons/dak.png" alt="Dak" width="32" height="32">
+            <button type="button" class="preset-icon-btn" data-icon="icons/education.svg" title="Education & Schools">
+              <img src="icons/education.svg" alt="Education" width="28" height="28">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/transport.svg" title="Transport & Fleet">
+              <img src="icons/transport.svg" alt="Transport" width="28" height="28">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/security.svg" title="Security & Police">
+              <img src="icons/security.svg" alt="Security" width="28" height="28">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/revenue.svg" title="Revenue & Land Records">
+              <img src="icons/revenue.svg" alt="Revenue" width="28" height="28">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/water.svg" title="Water Supply & PHED">
+              <img src="icons/water.svg" alt="Water" width="28" height="28">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/electricity.svg" title="Electricity & Energy">
+              <img src="icons/electricity.svg" alt="Electricity" width="28" height="28">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/helpdesk.svg" title="Helpdesk & Grievance">
+              <img src="icons/helpdesk.svg" alt="Helpdesk" width="28" height="28">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/drafting.png" title="Drafting & Orders">
+              <img src="icons/drafting.png" alt="Drafting" width="28" height="28">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/task.png" title="Task & Project Tracking">
+              <img src="icons/task.png" alt="Task" width="28" height="28">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/network.png" title="Network Infrastructure">
+              <img src="icons/network.png" alt="Network" width="28" height="28">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/records.png" title="Office Records & Files">
+              <img src="icons/records.png" alt="Records" width="28" height="28">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/budget.png" title="Budget & Accounts">
+              <img src="icons/budget.png" alt="Budget" width="28" height="28">
+            </button>
+            <button type="button" class="preset-icon-btn" data-icon="icons/dak.png" title="Dak & Postal">
+              <img src="icons/dak.png" alt="Dak" width="28" height="28">
             </button>
             <button type="button" class="preset-icon-btn" data-icon="icons/portal.png" title="Web Portal">
-              <img src="icons/portal.png" alt="Portal" width="32" height="32">
+              <img src="icons/portal.png" alt="Portal" width="28" height="28">
             </button>
-            <button type="button" class="preset-icon-btn" data-icon="icons/analytics.png" title="Analytics">
-              <img src="icons/analytics.png" alt="Analytics" width="32" height="32">
+            <button type="button" class="preset-icon-btn" data-icon="icons/analytics.png" title="Analytics & Dashboard">
+              <img src="icons/analytics.png" alt="Analytics" width="28" height="28">
             </button>
-            <button type="button" class="preset-icon-btn" data-icon="icons/server.png" title="Server">
-              <img src="icons/server.png" alt="Server" width="32" height="32">
+            <button type="button" class="preset-icon-btn" data-icon="icons/server.png" title="Server & Database">
+              <img src="icons/server.png" alt="Server" width="28" height="28">
             </button>
-            <button type="button" class="preset-icon-btn" data-icon="icons/accc.png" title="Camera">
-              <img src="icons/accc.png" alt="Camera" width="32" height="32">
+            <button type="button" class="preset-icon-btn" data-icon="icons/accc.png" title="ACCC Cameras">
+              <img src="icons/accc.png" alt="Camera" width="28" height="28">
             </button>
-            <button type="button" class="preset-icon-btn" data-icon="icons/ecms.png" title="Election">
-              <img src="icons/ecms.png" alt="ECMS" width="32" height="32">
+            <button type="button" class="preset-icon-btn" data-icon="icons/ecms.png" title="ECMS Election">
+              <img src="icons/ecms.png" alt="ECMS" width="28" height="28">
             </button>
-            <button type="button" class="preset-icon-btn" data-icon="icons/ems.png" title="Personnel">
-              <img src="icons/ems.png" alt="EMS" width="32" height="32">
+            <button type="button" class="preset-icon-btn" data-icon="icons/ems.png" title="Personnel & HR">
+              <img src="icons/ems.png" alt="EMS" width="28" height="28">
             </button>
-            <button type="button" class="preset-icon-btn" data-icon="icons/sampark.png" title="Communication">
-              <img src="icons/sampark.png" alt="Sampark" width="32" height="32">
+            <button type="button" class="preset-icon-btn" data-icon="icons/sampark.png" title="Sampark Public">
+              <img src="icons/sampark.png" alt="Sampark" width="28" height="28">
             </button>
-            <button type="button" class="preset-icon-btn" data-icon="icons/flagship.png" title="Flagship">
-              <img src="icons/flagship.png" alt="Flagship" width="32" height="32">
+            <button type="button" class="preset-icon-btn" data-icon="icons/flagship.png" title="Flagship Schemes">
+              <img src="icons/flagship.png" alt="Flagship" width="28" height="28">
             </button>
           </div>
-          <input type="hidden" id="form-app-icon" value="icons/drafting.png">
+          <input type="hidden" id="form-app-icon" value="icons/election.svg">
         </div>
 
         <div class="modal-footer">
@@ -228,6 +544,115 @@
           <button type="submit" class="btn btn-primary btn-sm">Save Application</button>
         </div>
       </form>
+    </div>
+  </dialog>
+
+  <!-- ======================================================================
+       ADMIN LOGIN MODAL DIALOG
+       ====================================================================== -->
+  <dialog id="admin-login-modal" class="app-modal" aria-labelledby="login-modal-title">
+    <div class="modal-dialog-inner">
+      <div class="modal-header">
+        <div class="service-modal-header-info">
+          <span class="badge-code" style="background-color: #0f172a;">AUTH</span>
+          <h2 id="login-modal-title" class="modal-title">Admin Authentication</h2>
+        </div>
+        <button type="button" id="close-login-modal-btn" class="modal-close-btn" aria-label="Close dialog">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="admin-login-form" class="modal-form" novalidate>
+        <p class="auth-modal-notice" id="login-modal-message">
+          Please enter your Administrator User ID and Password to manage services, edit applications, and change system configurations.
+        </p>
+
+        <div class="form-group">
+          <label for="login-username" class="form-label">User ID <span class="required">*</span></label>
+          <input type="text" id="login-username" class="form-input" placeholder="admin" value="admin" autocomplete="username" required>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password" class="form-label">Password <span class="required">*</span></label>
+          <input type="password" id="login-password" class="form-input" placeholder="Enter admin password" autocomplete="current-password" required>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancel-login-modal-btn" class="btn btn-secondary btn-sm">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm" id="submit-login-btn">
+            <span>Login as Admin</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- ======================================================================
+       ADMIN RESET PASSWORD MODAL DIALOG
+       ====================================================================== -->
+  <dialog id="admin-reset-pwd-modal" class="app-modal" aria-labelledby="reset-modal-title">
+    <div class="modal-dialog-inner">
+      <div class="modal-header">
+        <div class="service-modal-header-info">
+          <span class="badge-code" style="background-color: #0f172a;">SECURITY</span>
+          <h2 id="reset-modal-title" class="modal-title">Change Password</h2>
+        </div>
+        <button type="button" id="close-reset-pwd-modal-btn" class="modal-close-btn" aria-label="Close dialog">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="admin-reset-pwd-form" class="modal-form" novalidate>
+        <div class="form-group">
+          <label for="pwd-current" class="form-label">Current Password <span class="required">*</span></label>
+          <input type="password" id="pwd-current" class="form-input" placeholder="Enter current password" autocomplete="current-password" required>
+        </div>
+
+        <div class="form-group">
+          <label for="pwd-new" class="form-label">New Password <span class="required">*</span></label>
+          <input type="password" id="pwd-new" class="form-input" placeholder="Minimum 4 characters" autocomplete="new-password" required>
+        </div>
+
+        <div class="form-group">
+          <label for="pwd-confirm" class="form-label">Confirm New Password <span class="required">*</span></label>
+          <input type="password" id="pwd-confirm" class="form-input" placeholder="Re-enter new password" autocomplete="new-password" required>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancel-reset-pwd-modal-btn" class="btn btn-secondary btn-sm">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm">Update Password</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- ======================================================================
+       SERVICE DIAGNOSTICS & DETAILS MODAL
+       ====================================================================== -->
+  <dialog id="service-details-modal" class="app-modal" aria-labelledby="service-modal-title">
+    <div class="modal-dialog-inner">
+      <div class="modal-header">
+        <div class="service-modal-header-info">
+          <span class="badge-code" id="service-modal-badge">SERVICE</span>
+          <h2 id="service-modal-title" class="modal-title">Service Diagnostics & Control</h2>
+        </div>
+        <button type="button" id="close-service-modal-btn" class="modal-close-btn" aria-label="Close dialog">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="service-modal-body" id="service-modal-body">
+        <!-- Dynamically populated by app.js -->
+      </div>
     </div>
   </dialog>
 
@@ -243,7 +668,7 @@
           <span class="footer-bullet">•</span>
           <span class="footer-district">District IT Office, Khairthal-Tijara</span>
           <span class="footer-bullet">•</span>
-          <span class="footer-version">Version 1.0</span>
+          <span class="footer-version">Version 3.2 (Dual Port 80/8000, Multi-User Auth & In-App Workspace)</span>
         </div>
         <p class="footer-credits">
           Designed by <strong>Deputy Director (ACP)</strong> &nbsp;|&nbsp; 
@@ -254,6 +679,6 @@
   </footer>
 
   <!-- Core JavaScript -->
-  <script src="app.js?v=2.1"></script>
+  <script src="app.js?v=3.2"></script>
 </body>
 </html>
